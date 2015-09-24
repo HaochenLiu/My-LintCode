@@ -25,7 +25,12 @@ public:
         multiset<int, less<int>> minHeap;
         multiset<int, greater<int>> maxHeap;
         vector<int> res;
-        for (int i = 0; i < nums.size(); i++) {
+        int n = nums.size();
+        if (n == 0 || k == 0 || n < k) {
+            return res;
+        }
+
+        for (int i = 0; i < n; i++) {
             if (i >= k) {
                 int toDelete = nums[i - k];
                 if (maxHeap.find(toDelete) != maxHeap.end()) {
@@ -34,8 +39,7 @@ public:
                         maxHeap.emplace(*minHeap.begin());
                         minHeap.erase(minHeap.begin());
                     }
-                }
-                else {
+                } else {
                     minHeap.erase(minHeap.find(toDelete));
                     if (maxHeap.size() > 1 + minHeap.size()) {
                         minHeap.emplace(*maxHeap.begin());
@@ -50,8 +54,7 @@ public:
                     minHeap.emplace(*maxHeap.begin());
                     maxHeap.erase(maxHeap.begin());
                 }
-            }
-            else {
+            } else {
                 minHeap.emplace(nums[i]);
                 if (minHeap.size() > maxHeap.size()) {
                     maxHeap.emplace(*minHeap.begin());
