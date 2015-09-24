@@ -15,6 +15,7 @@ Challenge
 O(nlog(n)) time
 */
 
+// <map> is a powerful magic
 #include <map>
 using namespace std;
 
@@ -32,7 +33,7 @@ public:
         
         vector<int> ans;
         int n = nums.size();
-        if (n == 0 || k == 0) {
+        if (n == 0 || k == 0 || n < k) {
             return ans;
         }
         
