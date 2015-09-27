@@ -16,6 +16,10 @@ Challenge
 O(nm) time and memory.
 */
 
+/*
+这道题不求最短路径，求最长路径。用BFS根本毫无道理，果然超时了。
+*/
+
 class Solution {
 private:
     int dx[4] = {0, 1, 0, -1};
