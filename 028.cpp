@@ -29,9 +29,12 @@ public:
      */
     bool searchMatrix(vector<vector<int> > &matrix, int target) {
         // write your code here
-        if(matrix.size() == 0 || matrix[0].size() == 0) return 0;
+        if(matrix.empty() || matrix[0].empty()) return false;
         int n = matrix.size();
         int m = matrix[0].size();
+        if(target < matrix[0][0] || target > matrix[n - 1][m- 1]) {
+            return false;
+        }
         int up = 0;
         int down = n - 1;
         while(up <= down) {
