@@ -50,10 +50,8 @@ public:
             for (auto &nn : n->neighbors) {
                 fa = find(father, n->label);
                 fb = find(father, nn->label);
-                if (fa != fb) {
-                    father[fa] = min(fa, fb);
-                    father[fb] = min(fa, fb);
-                }
+                father[fa] = min(fa, fb);
+                father[fb] = min(fa, fb);
             }
         }
         unordered_map<int, vector<int>> comp;
