@@ -35,6 +35,10 @@ What if there is a lot of solutions?
 Return any of them.
 */
 
+/*
+Time: O(n)
+*/
+
 #include <algorithm>
 using namespace std;
 
