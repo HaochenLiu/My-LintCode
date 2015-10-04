@@ -39,9 +39,6 @@ Return any of them.
 Time: O(n)
 */
 
-#include <algorithm>
-using namespace std;
-
 class Solution {
 public:
     /**
@@ -49,28 +46,26 @@ public:
      * @return: void
      */
     void heapify(vector<int> &A) {
+        // write your code here
         int n = A.size();
-        if (n < 2) {
-            return;
-        }
-        int i, j;
-        int minIdx;
-        int minVal;
-        
-        for (i = (n - 1) / 2; i >= 0; --i) {
+        int i = 0;
+        int j = 0;
+        int minIdx = 0;
+        int minVal = INT_MAX;
+        for(int i = (n - 1) / 2; i >= 0; i--) {
             j = i;
-            minIdx = i;
-            while (j * 2 + 1 < n) {
+            while(2 * j  + 1 < n) {
+                minIdx = j;
                 minVal = A[j];
-                if (A[j * 2 + 1] < minVal) {
-                    minIdx = j * 2 + 1;
+                if(A[2 * j + 1] < minVal) {
+                    minIdx = 2 * j + 1;
                     minVal = A[minIdx];
                 }
-                if (j * 2 + 2 < n && A[j * 2 + 2] < minVal) {
-                    minIdx = j * 2 + 2;
+                if(2 * j + 2 < n && A[2 * j + 2] < minVal) {
+                    minIdx = 2 * j + 2;
                     minVal = A[minIdx];
                 }
-                if (minIdx == j) {
+                if(minIdx == j) {
                     break;
                 }
                 swap(A[j], A[minIdx]);
