@@ -37,6 +37,7 @@ Return any of them.
 
 /*
 Time: O(n)
+级数求和
 */
 
 class Solution {
