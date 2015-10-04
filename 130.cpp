@@ -53,27 +53,28 @@ public:
         if (n < 2) {
             return;
         }
-        int i, j, k;
+        int i, j;
+        int minIdx;
         int minVal;
         
         for (i = (n - 1) / 2; i >= 0; --i) {
             j = i;
+            minIdx = i;
             while (j * 2 + 1 <= n - 1) {
-                k = j;
                 minVal = A[j];
                 if (A[j * 2 + 1] < minVal) {
-                    k = j * 2 + 1;
-                    minVal = A[k];
+                    minIdx = j * 2 + 1;
+                    minVal = A[minIdx];
                 }
                 if (j * 2 + 2 <= n - 1 && A[j * 2 + 2] < minVal) {
-                    k = j * 2 + 2;
-                    minVal = A[k];
+                    minIdx = j * 2 + 2;
+                    minVal = A[minIdx];
                 }
-                if (k == j) {
+                if (minIdx == j) {
                     break;
                 }
-                swap(A[j], A[k]);
-                j = k;
+                swap(A[j], A[minIdx]);
+                j = minIdx;
             }
         }
     }
