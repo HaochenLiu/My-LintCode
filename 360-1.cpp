@@ -15,7 +15,12 @@ Challenge
 O(nlog(n)) time
 */
 
-// <map> is a powerful magic
+/*
+Time: O(nlogn)
+Space: O(k)
+Extra space: O(k)
+*/
+
 #include <map>
 using namespace std;
 
