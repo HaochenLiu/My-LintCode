@@ -26,29 +26,26 @@ public:
         int n = nums.size();
         priority_queue<int, vector<int>, less<int> > small;
         priority_queue<int, vector<int>, greater<int> > large;
-        int i;
-        vector<int> ans;
-        
+        vector<int> res;
+
         small.push(INT_MIN);
         large.push(INT_MAX);
-        int vs;
-        int vl;
-        for(i = 0; i < n; ++i) {
+        for(int i = 0; i < n; ++i) {
             if(i & 1) {
                 large.push(nums[i]);
             } else {
                 small.push(nums[i]);
             }
-            vs = small.top();
-            vl = large.top();
+            int vs = small.top();
+            int vl = large.top();
             if(vs > vl) {
                 small.pop();
                 small.push(vl);
                 large.pop();
                 large.push(vs);
             }
-            ans.push_back(small.top());
+            res.push_back(small.top());
         }
-        return ans;
+        return res;
     }
 };
