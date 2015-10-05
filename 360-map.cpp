@@ -21,97 +21,93 @@ Space: O(k)
 Extra space: O(k)
 */
 
-#include <map>
-using namespace std;
-
 class Solution {
+private:
+    void adjust(map<int, int>& small, int& ns, map<int, int>& large, int& nl) {
+        if(small.empty() || large.empty()) return;
+        int s = small.rbegin()->first;
+        int l = large.begin()->first;
+        if(s > l) {
+            del(small, s);
+            del(large, l);
+            small[l]++;
+            large[s]++;
+        }
+    }
+
+    void del(map<int, int>& m, int n) {
+        if(m[n] == 1) {
+            m.erase(n);
+        } else {
+            m[n]--;
+        }
+    }
+
+    void remove(int n, map<int, int>& small, int& ns, map<int, int>& large, int& nl) {
+        if(large.find(n) != large.end()) {
+            del(large, n);
+            nl--;
+        } else {
+            del(small, n);
+            ns--;
+        }
+        if(ns < nl) {
+            int l = large.begin()->first;
+            del(large, l);
+            nl--;
+            small[l]++;
+            ns++;
+            return;
+        }
+        
+        if(ns > nl + 1) {
+            int s = small.rbegin()->first;
+            del(small, s);
+            ns--;
+            large[s]++;
+            nl++;
+            return;
+        }
+    }
+    
+    void add(int n, map<int, int>& small, int& ns, map<int, int>& large, int& nl) {
+        if(ns == nl) {
+            small[n]++;
+            ns++;
+        } else {
+            large[n]++;
+            nl++;
+        }
+        adjust(small, ns, large, nl);
+    }
+
 public:
     /**
      * @param nums: A list of integers.
      * @return: The median of the element inside the window at each moving
      */
     vector<int> medianSlidingWindow(vector<int> &nums, int k) {
-        small.clear();
-        large.clear();
-        ns = 0;
-        nl = 0;
-        
-        vector<int> ans;
+        // write your code here
+        map<int, int> small;
+        map<int, int> large;
         int n = nums.size();
-        if (n == 0 || k == 0 || n < k) {
-            return ans;
-        }
+        vector<int> res;
+        if(k > n || k < 1 || n < 1) return res;
+        if(k == 1) return nums;
+        int ns = 0;
+        int nl = 0;
         
-        for(int i = 0; i < k - 1; i++) {
-            add(nums[i]);
+        for(int i = 0; i < k; i++) {
+            add(nums[i], small, ns, large, nl);
         }
-        for(int i = k - 1; i < n; i++) {
-            add(nums[i]);
-            ans.push_back(small.rbegin()->first);
-            remove(nums[i - k + 1]);
-        }
-        return ans;
-    }
-private:
-    map<int, int> small;
-    map<int, int> large;
-    int ns;
-    int nl;
-    
-    void del(map<int, int> &m, int x) {
-        m[x]--;
-        if (m[x] == 0) {
-            m.erase(x);
-        }
-    }
-    
-    void adjust() {
-        if (small.empty() || large.empty()) return;
+        res.push_back(small.rbegin()->first);
 
-        int n1, n2;
-        n1 = small.rbegin()->first;
-        n2 = large.begin()->first;
-        if (n1 <= n2) {
-            return;
+        for(int i = k; i < n; i++) {
+            remove(nums[i - k], small, ns, large, nl);
+            add(nums[i], small, ns, large, nl);
+            res.push_back(small.rbegin()->first);
         }
         
-        del(small, n1);
-        small[n2]++;
-        
-        del(large, n2);
-        large[n1]++;
-    }
-    
-    void add(int x) {
-        if (ns == nl) {
-            small[x]++;
-            ns++;
-        } else {
-            large[x]++;
-            nl++;
-        }
-        adjust();
-    }
-    
-    void remove(int x) {
-        if(small.find(x) != small.end()) {
-            del(small, x);
-            ns--;
-        } else {
-            del(large, x);
-            nl--;
-        }
-        if(ns < nl) {
-            small[large.begin()->first]++;
-            del(large, large.begin()->first);
-            ns++;
-            nl--;
-        } else if(ns > nl + 1) {
-            large[small.rbegin()->first]++;
-            del(small, small.rbegin()->first);
-            ns--;
-            nl++;
-        }
-        adjust();
+        return res;
     }
 };
