@@ -42,15 +42,10 @@ public:
             return ans;
         }
         
-        ns = 0;
-        nl = 0;
-        int s;
-        int l;
-        int i;
-        for(i = 0; i < k - 1; i++) {
+        for(int i = 0; i < k - 1; i++) {
             add(nums[i]);
         }
-        for(i = k - 1; i < n; i++) {
+        for(int i = k - 1; i < n; i++) {
             add(nums[i]);
             ans.push_back(small.rbegin()->first);
             remove(nums[i - k + 1]);
@@ -58,7 +53,8 @@ public:
         return ans;
     }
 private:
-    map<int, int> small, large;
+    map<int, int> small;
+    map<int, int> large;
     int ns;
     int nl;
     
