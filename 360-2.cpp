@@ -14,6 +14,12 @@ Challenge
 O(nlog(n)) time
 */
 
+/*
+Time: O(nlogn)
+Space: O(k)
+Extra space: O(k)
+*/
+
 class Solution {
 public:
     /**
