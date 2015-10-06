@@ -12,8 +12,8 @@ Note
 
 /*
 union-find:
-union: expected O(1)
-find: expected O(1)
+union: amortized O(1)
+find: amortized O(1)
 
 Time: O(nm)
 Space: O(nm)
