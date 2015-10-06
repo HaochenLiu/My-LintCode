@@ -33,48 +33,49 @@ public:
      */
     vector<int> medianSlidingWindow(vector<int> &nums, int k) {
         // write your code here
-        multiset<int, less<int>> minHeap;
-        multiset<int, greater<int>> maxHeap;
+        multiset<int, greater<int>> small;
+        multiset<int, less<int>> large;
         vector<int> res;
         int n = nums.size();
-        if (n == 0 || k == 0 || n < k) {
-            return res;
-        }
+        if(n < 1 || k < 1 || n < k) return res;
+        if(k == 1) return nums;
+        small.insert(INT_MIN);
+        large.insert(INT_MAX);
 
-        for (int i = 0; i < n; i++) {
-            if (i >= k) {
+        for(int i = 0; i < n; i++) {
+            if(i >= k) {
                 int toDelete = nums[i - k];
-                if (maxHeap.find(toDelete) != maxHeap.end()) {
-                    maxHeap.erase(maxHeap.find(toDelete));
-                    if (minHeap.size() > maxHeap.size()) {
-                        maxHeap.emplace(*minHeap.begin());
-                        minHeap.erase(minHeap.begin());
+                if(large.find(toDelete) != large.end()) {
+                    large.erase(large.find(toDelete));
+                    if(small.size() > large.size() + 1) {
+                        large.insert(*small.begin());
+                        small.erase(small.begin());
                     }
                 } else {
-                    minHeap.erase(minHeap.find(toDelete));
-                    if (maxHeap.size() > 1 + minHeap.size()) {
-                        minHeap.emplace(*maxHeap.begin());
-                        maxHeap.erase(maxHeap.begin());
+                    small.erase(small.find(toDelete));
+                    if(large.size() > small.size()) {
+                        small.insert(*large.begin());
+                        large.erase(large.begin());
                     }
                 }
             }
             
-            if (maxHeap.empty() || nums[i] <= *(maxHeap.begin())) {
-                maxHeap.emplace(nums[i]);
-                if (maxHeap.size() > 1 + minHeap.size()) {
-                    minHeap.emplace(*maxHeap.begin());
-                    maxHeap.erase(maxHeap.begin());
+            if(nums[i] <= *(small.begin())) {
+                small.insert(nums[i]);
+                if(small.size() > large.size() + 1) {
+                    large.insert(*small.begin());
+                    small.erase(small.begin());
                 }
             } else {
-                minHeap.emplace(nums[i]);
-                if (minHeap.size() > maxHeap.size()) {
-                    maxHeap.emplace(*minHeap.begin());
-                    minHeap.erase(minHeap.begin());
+                large.insert(nums[i]);
+                if(large.size() > small.size()) {
+                    small.insert(*large.begin());
+                    large.erase(large.begin());
                 }
             }
             
-            if (i >= k - 1) {
-                res.push_back(*maxHeap.begin());
+            if(i >= k - 1) {
+                res.push_back(*small.begin());
             }
         }
         return res;
