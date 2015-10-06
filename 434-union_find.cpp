@@ -10,6 +10,21 @@ Note
 0 is represented as the sea, 1 is represented as the island. If two 1 is adjacent, we consider them in the same island. We only consider up/down/left/right adjacent.
 */
 
+/*
+union-find:
+union: expected O(1)
+find: expected O(1)
+
+Time: O(nm)
+Space: O(nm)
+Extra space: O(nm)
+
+BF
+Time: O(nmk)
+Space: O(nm)
+Extra space: O(nm)
+*/
+
 /**
 * Definition for a point.
 * struct Point {
