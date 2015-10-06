@@ -13,6 +13,11 @@ Clarification
 What's the definition of Median? - Median is the number that in the middle of a sorted array. If there are n numbers in a sorted array A, the median is A[(n - 1) / 2]. For example, if A=[1,2,3], median is 2. If A=[1,19], median is 1.
 */
 
+/*
+less 大顶堆
+greater 小顶堆
+*/
+
 #include <queue>
 using namespace std;
 
