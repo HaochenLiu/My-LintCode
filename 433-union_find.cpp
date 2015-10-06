@@ -60,6 +60,7 @@ public:
                     if(!inBound(nx, ny, n, m)) continue;
                     if(grid[nx][ny] == 0) continue;
                     int nt = nx * m + ny;
+                    ft = find(father, t);
                     int fnt = find(father, nt);
                     father[ft] = min(ft, fnt);
                     father[fnt] = min(ft, fnt);
