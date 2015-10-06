@@ -9,14 +9,14 @@ public:
         __size = 0;
     }
 	
-	void check() {
-		cout<<"size: "<<__size<<endl;
-		cout<<"[";
-		for(int i = 0; i < __size - 1; i++) {
-			cout<<A[i]<<", ";
-		}
-		cout<<A[__size - 1]<<"]"<<endl;
-	}
+    void check() {
+        cout<<"size: "<<__size<<endl;
+        cout<<"[";
+        for(int i = 0; i < __size - 1; i++) {
+            cout<<A[i]<<", ";
+        }
+        cout<<A[__size - 1]<<"]"<<endl;
+    }
 	
     int size() {
         return __size;
@@ -134,16 +134,16 @@ public:
     }
 
 	
-	void check() {
-		cout<<"size: "<<__size<<endl;
-		cout<<"[";
-		for(int i = 0; i < __size - 1; i++) {
-			cout<<A[i]<<", ";
-		}
-		cout<<A[__size - 1]<<"]"<<endl;
-	}
+    void check() {
+        cout<<"size: "<<__size<<endl;
+        cout<<"[";
+        for(int i = 0; i < __size - 1; i++) {
+            cout<<A[i]<<", ";
+        }
+        cout<<A[__size - 1]<<"]"<<endl;
+    }
 	
-	int size() {
+    int size() {
         return __size;
     }
 
