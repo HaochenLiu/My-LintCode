@@ -15,6 +15,11 @@ O(nlog(n)) time
 */
 
 /*
+less 从小到大排序（正常）
+greater 从大到小排序
+*/
+
+/*
 Time: O(nlogn)
 Space: O(k)
 Extra space: O(k)
