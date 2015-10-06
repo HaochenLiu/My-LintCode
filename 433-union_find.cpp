@@ -18,6 +18,16 @@ Note
 0 is represented as the sea, 1 is represented as the island. If two 1 is adjacent, we consider them in the same island. We only consider up/down/left/right adjacent.
 */
 
+/*
+union-find:
+union: O(1)
+find: O(1)
+
+Time: O(nm)
+Space: O(nm)
+Extra space: O(nm)
+*/
+
 class Solution {
 private:
     int dx[4] = {1, 0, -1, 0};
