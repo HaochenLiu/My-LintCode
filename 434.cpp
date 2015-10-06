@@ -21,17 +21,6 @@ Note
 */
 class Solution {
 public:
-    Solution() {
-        d.resize(4, vector<int>(2));
-        d[0][0] = +1;
-        d[0][1] = 0;
-        d[1][0] = -1;
-        d[1][1] = 0;
-        d[2][0] = 0;
-        d[2][1] = +1;
-        d[3][0] = 0;
-        d[3][1] = -1;
-    }
     /**
      * @param n an integer
      * @param m an integer
@@ -39,79 +28,65 @@ public:
      * @return an integer array
      */
     vector<int> numIslands2(int n, int m, vector<Point> &operators) {
-        b.clear();
-        dj.clear();
-        
-        this->n = n;
-        this->m = m;
-        b.resize(n * m, false);
-        dj.resize(n * m);
-        
-        int i;
-        for (i = 0; i < n * m; ++i) {
-            dj[i] = i;
-        }
-        
-        int cc = 0;
-        int x, y;
-        int x1, y1;
-        int r, r1;
-        vector<int> ans;
-        vector<int> adj;
-        int j;
-        for (i = 0; i < operators.size(); ++i) {
-            x = operators[i].x;
-            y = operators[i].y;
-            if (b[x * m + y]) {
-                ans.push_back(cc);
+        // Write your code here
+        vector<int> res;
+        if(n == 0 || m == 0) return res;
+        vector<vector<int>> grid(n, vector<int>(m, 0));
+        vector<int> father(n * m, -1);
+        int sz = operators.size();
+        for(int i = 0; i < sz; i++) {
+            int x = operators[i].x;
+            int y = operators[i].y;
+            grid[x][y] = 1;
+            int t = x * m + y;
+            int ft = find(father, t);
+            if(i == 0) {
+                res.push_back(1);
                 continue;
             }
-            b[x * m + y] = true;
-            adj.clear();
-            for (j = 0; j < 4; ++j) {
-                x1 = x + d[j][0];
-                y1 = y + d[j][1];
-                if (inbound(x1, y1) && b[x1 * m + y1]) {
-                    adj.push_back(x1 * m + y1);
-                }
+            unordered_set<int> s;
+            for(int k = 0; k < 4; k++) {
+                int nx = x + dx[k];
+                int ny = y + dy[k];
+                int nt = nx * m + ny;
+                if(!inBound(nx, ny, n, m)) continue;
+                if(grid[nx][ny] == 0) continue;
+                s.insert(find(father, nt));
             }
-            if (adj.empty()) {
-                ans.push_back(++cc);
-                continue;
+            res.push_back(res.back() + 1 - s.size());
+
+            for(int k = 0; k < 4; k++) {
+                int nx = x + dx[k];
+                int ny = y + dy[k];
+                int nt = nx * m + ny;
+                if(!inBound(nx, ny, n, m)) continue;
+                if(grid[nx][ny] == 0) continue;
+                ft = find(father, t);
+                int fnt = find(father, nt);
+                father[ft] = min(ft, fnt);
+                father[fnt] = min(ft, fnt);
             }
-            dj[findRoot(adj[0])] = findRoot(x * m + y);
-            for (j = 1; j < adj.size(); ++j) {
-                r = findRoot(x * m + y);
-                r1 = findRoot(adj[j]);
-                if (r != r1) {
-                    dj[r1] = r;
-                    --cc;
-                }
-            }
-            ans.push_back(cc);
         }
-        return ans;
+
+        return res;
     }
+    
 private:
-    vector<vector<int> > d;
-    vector<int> b, dj;
-    int n, m;
-   
-    bool inbound(int x, int y) {
-        return x >=0 && x <= n - 1 && y >= 0 && y <= m - 1;
+    int dx[4] = {1, 0, -1, 0};
+    int dy[4] = {0, 1, 0, -1};
+    
+    int find(vector<int>& father, int a) {
+        if(father[a] == -1) {
+            father[a] = a;
+            return a;
+        }
+        while(father[a] != a) {
+            a = father[a];
+        }
+        return a;
     }
-   
-    int findRoot(int x) {
-        int r = x;
-        while (r != dj[r]) {
-            r = dj[r];
-        }
-        int k = x;
-        while (x != r) {
-            x = dj[x];
-            dj[k] = r;
-            k = x;
-        }
-        return r;
+
+    bool inBound(int x, int y, int n, int m) {
+        return (x >= 0 && y >= 0 && x < n && y < m);
     }
 };
