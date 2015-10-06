@@ -20,8 +20,8 @@ Note
 
 /*
 union-find:
-union: O(1)
-find: O(1)
+union: expected O(1)
+find: expected O(1)
 
 Time: O(nm)
 Space: O(nm)
