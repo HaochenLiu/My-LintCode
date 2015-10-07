@@ -28,7 +28,7 @@ Sort the element in the set in increasing order
  */
 class Solution {
 private:
-    int getFather(unordered_map<int, int>& father, int i) {
+    int find(unordered_map<int, int>& father, int i) {
         if(father.find(i) == father.end()) {
             father[i] = i;
             return i;
@@ -53,8 +53,8 @@ public:
         unordered_map<int, int> father;
         for(int i = 0; i < n; i++) {
             for(int j = 0; j < nodes[i]->neighbors.size(); j++) {
-                int fa = getFather(father, nodes[i]->label);
-                int fb = getFather(father, nodes[i]->neighbors[j]->label);
+                int fa = find(father, nodes[i]->label);
+                int fb = find(father, nodes[i]->neighbors[j]->label);
                 father[fa] = min(fa, fb);
                 father[fb] = min(fa, fb);
             }
@@ -67,7 +67,7 @@ public:
             s.insert(nodes[i]->label);
             record.push_back(nodes[i]->label);
             for(int j = i + 1; j < n; j++) {
-                if(getFather(father, nodes[i]->label) == getFather(father, nodes[j]->label)) {
+                if(find(father, nodes[i]->label) == find(father, nodes[j]->label)) {
                     s.insert(nodes[j]->label);
                     record.push_back(nodes[j]->label);
                 }
