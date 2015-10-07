@@ -18,7 +18,6 @@ Note
 Sort the element in the set in increasing order
 */
 
-
 /**
  * Definition for Directed graph.
  * struct DirectedGraphNode {
