@@ -19,7 +19,7 @@ Note
 */
 
 /*
-union-find:
+union-find带路径压缩:
 union: amortized O(1)
 find: amortized O(1)
 
