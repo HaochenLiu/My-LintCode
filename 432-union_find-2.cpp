@@ -45,7 +45,7 @@ private:
         
         int f = i;
         int p;
-        while(father[f] != r) {
+        while(f != r) {
             p = father[f];
             father[f] = r;
             f = p;
