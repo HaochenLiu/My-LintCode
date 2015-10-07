@@ -60,22 +60,18 @@ public:
             }
         }
      
-        unordered_set<int> s;
-        for(int i = 0; i < n; i++) {
-            if(s.find(nodes[i]->label) != s.end()) continue;
-            record.clear();
-            s.insert(nodes[i]->label);
-            record.push_back(nodes[i]->label);
-            for(int j = i + 1; j < n; j++) {
-                if(find(father, nodes[i]->label) == find(father, nodes[j]->label)) {
-                    s.insert(nodes[j]->label);
-                    record.push_back(nodes[j]->label);
-                }
-            }
-            sort(record.begin(), record.end());
-            res.push_back(record);
+        unordered_map<int, vector<int>> m;
+        for (int i = 0; i < n; i++) {
+            int fn = find(father, nodes[i]->label);
+            m[fn].push_back(nodes[i]->label);
         }
 
+        unordered_map<int, vector<int>>::iterator it;
+        for (it = m.begin(); it != m.end(); it++) {
+            sort(it->second.begin(), it->second.end());
+            res.push_back(it->second);
+        }
+        
         return res;
     }
 };
