@@ -15,6 +15,12 @@ What's the definition of longest increasing subsequence?
     * https://en.wikipedia.org/wiki/Longest_common_subsequence_problem
 */
 
+/*
+Time: O(nlogn)
+Space: O(n)
+Extra space: O(n)
+*/
+
 class Solution {
 public:
     /**
