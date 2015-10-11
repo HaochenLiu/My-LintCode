@@ -14,6 +14,12 @@ Challenge
 O(n) time and O(1) memory
 */
 
+/*
+Time: O(1)
+Space: O(1)
+Extra Space: O(1)
+*/
+
 class Solution {
 public:
     /**
