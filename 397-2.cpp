@@ -30,6 +30,7 @@ public:
     int longestIncreasingContinuousSubsequence(vector<int>& A) {
         return max(solve(A, lt), solve(A, gt));
     }
+    
 private:
     int solve(vector<int> &a, bool (*comp)(const int &, const int &)) {
         int n = a.size();
