@@ -9,6 +9,12 @@ Given values array A = [1,2,2], return true.
 Given A = [1,2,4], return false.
 */
 
+/*
+Time: O(n^2)
+Space: O(n^2)
+Extra Space: O(n^2)
+*/
+
 // Solution using DP
 #include <algorithm>
 using namespace std;
