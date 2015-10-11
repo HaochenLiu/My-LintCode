@@ -27,32 +27,29 @@ public:
      */
     bool firstWillWin(vector<int> &values) {
         // Even number case.
-        if (values.size() % 2 == 0) {
-            if (firstWinEvenCoins(values)) {
-                return true;
-            }
-        }
+        int n = values.size();
+        if(n == 1) return true;
+        if((n % 2 == 0) && (firstWinEvenCoins(values))) return true;
 
         // Count total.
         int sum = 0;
-        for (int i = 0; i < values.size(); ++i) {
+        for (int i = 0; i < n; ++i) {
             sum += values[i];
         }
 
-        // dp[i][n] = max(values[i] + min(dp[i + 2][n - 2], dp[i + 1][n - 2]),
-        //               values[i + n - 1] + min(dp[i + 1][n - 2], dp[i][n - 2]))
-        vector<vector<int>> dp(values.size(), vector<int>(3, 0));
+        // dp[i][j] = max(values[i] + min(dp[i + 2][j - 2], dp[i + 1][j - 2]),
+        //               values[i + j - 1] + min(dp[i + 1][j - 2], dp[i][j - 2]))
+        vector<vector<int>> dp(n, vector<int>(3, 0));
 
-        for (int n = 0; n <= values.size(); ++n) {
-            for (int i = 0; i + n - 1 < values.size(); ++i) {
-                int a = i + 2 <= values.size() - 1 && n - 2 >= 0 ? dp[i + 2][(n - 2) % 3] : 0;
-                int b = i + 1 <= values.size() - 1 && n - 2 >= 0 ? dp[i + 1][(n - 2) % 3] : 0;
-                int c = n - 2 >= 0 ? dp[i][(n - 2) % 3] : 0;
-                dp[i][n % 3] = max(values[i] + min(a, b),
-                                  values[i + n - 1] + min(b, c));
+        for (int j = 0; j <= n; j++) {
+            for (int i = 0; i + j - 1 < n && i + j - 1 >= 0; i++) {
+                int a = i + 2 <= n - 1 && j - 2 >= 0 ? dp[i + 2][(j - 2) % 3] : 0;
+                int b = i + 1 <= n - 1 && j - 2 >= 0 ? dp[i + 1][(j - 2) % 3] : 0;
+                int c = j - 2 >= 0 ? dp[i][(j - 2) % 3] : 0;
+                dp[i][j % 3] = max(values[i] + min(a, b), values[i + j - 1] + min(b, c));
             }
         }
-        return dp[0][values.size() % 3] > sum - dp[0][values.size() % 3];
+        return (dp[0][n % 3] * 2 > sum);
     }
 
     // Time: O(n), Space: O(1)
@@ -70,6 +67,6 @@ public:
             }
         }
 
-        return odd_sum != even_sum;
+        return (odd_sum != even_sum);
     }
 };
