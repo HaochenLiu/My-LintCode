@@ -39,8 +39,8 @@ public:
             sum += values[i];
         }
 
-        // P[i][n] = max(values[i] + min(P[i + 2][n - 2], P[i + 1][n - 2]),
-        //               values[i + n - 1] + min(P[i + 1][n - 2], P[i][n - 2]))
+        // dp[i][n] = max(values[i] + min(dp[i + 2][n - 2], dp[i + 1][n - 2]),
+        //               values[i + n - 1] + min(P[i + 1][n - 2], dp[i][n - 2]))
         vector<vector<int>> dp(values.size(), vector<int>(3, 0));
 
         for (int n = 0; n <= values.size(); ++n) {
