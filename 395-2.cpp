@@ -10,9 +10,9 @@ Given A = [1,2,4], return false.
 */
 
 /*
-Time: O(n^2)
-Space: O(n^2)
-Extra Space: O(n^2)
+Time: O(n)
+Space: O(n)
+Extra Space: O(n)
 */
 
 #include <algorithm>
