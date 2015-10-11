@@ -13,8 +13,10 @@ Follow Up Question:
 If n is even. Is there any hacky algorithm that can decide whether first player will win or lose in O(1) memory and O(n) time?
 */
 
-// Time:  O(n^2)
-// Space: O(n)
+/*
+Time:  O(n^2)
+Space: O(n)
+*/
 
 // DP with rolling window.
 class Solution {
