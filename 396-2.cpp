@@ -18,7 +18,6 @@ Time:  O(n^2)
 Space: O(n^2)
 */
 
-// DP with rolling window.
 class Solution {
 public:
     /**
