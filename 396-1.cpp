@@ -31,25 +31,22 @@ public:
         if(n == 1) return true;
         if((n % 2 == 0) && (firstWinEvenCoins(values))) return true;
 
-        // Count total.
-        int sum = 0;
-        for (int i = 0; i < n; ++i) {
-            sum += values[i];
-        }
-
-        // dp[i][j] = max(values[i] + min(dp[i + 2][j - 2], dp[i + 1][j - 2]),
-        //               values[i + j - 1] + min(dp[i + 1][j - 2], dp[i][j - 2]))
-        vector<vector<int>> dp(n, vector<int>(3, 0));
-
-        for (int j = 0; j <= n; j++) {
-            for (int i = 0; i + j - 1 < n && i + j - 1 >= 0; i++) {
-                int a = i + 2 <= n - 1 && j - 2 >= 0 ? dp[i + 2][(j - 2) % 3] : 0;
-                int b = i + 1 <= n - 1 && j - 2 >= 0 ? dp[i + 1][(j - 2) % 3] : 0;
-                int c = j - 2 >= 0 ? dp[i][(j - 2) % 3] : 0;
-                dp[i][j % 3] = max(values[i] + min(a, b), values[i + j - 1] + min(b, c));
+        vector<vector<int>> dp(2, vector<int>(n, 0));
+        vector<int> sum(n + 1, 0);
+        for (int i = 0; i < n; i++) {
+            sum[i + 1] = sum[i] + values[i];
+            if(i < n - 1) {
+                dp[0][i] = max(values[i], values[i + 1]);
             }
         }
-        return (dp[0][n % 3] * 2 > sum);
+
+        for (int i = 2; i < n; i++) {
+            for (int j = 0; i + j < n; j++) {
+                int a = sum[i + j + 1] - sum[j];
+                dp[(i + 1) % 2][j] = a - min(dp[i % 2][j + 1], dp[i % 2][j]);
+            }
+        }
+        return (dp[n % 2][0] * 2 > sum[n]);
     }
 
     // Time: O(n), Space: O(1)
