@@ -41,18 +41,18 @@ public:
 
         // P[i][n] = max(values[i] + min(P[i + 2][n - 2], P[i + 1][n - 2]),
         //               values[i + n - 1] + min(P[i + 1][n - 2], P[i][n - 2]))
-        vector<vector<int>> P(values.size(), vector<int>(3, 0));
+        vector<vector<int>> dp(values.size(), vector<int>(3, 0));
 
         for (int n = 0; n <= values.size(); ++n) {
             for (int i = 0; i + n - 1 < values.size(); ++i) {
-                int a = i + 2 <= values.size() - 1 && n - 2 >= 0 ? P[i + 2][(n - 2) % 3] : 0;
-                int b = i + 1 <= values.size() - 1 && n - 2 >= 0 ? P[i + 1][(n - 2) % 3] : 0;
-                int c = n - 2 >= 0 ? P[i][(n - 2) % 3] : 0;
-                P[i][n % 3] = max(values[i] + min(a, b),
+                int a = i + 2 <= values.size() - 1 && n - 2 >= 0 ? dp[i + 2][(n - 2) % 3] : 0;
+                int b = i + 1 <= values.size() - 1 && n - 2 >= 0 ? dp[i + 1][(n - 2) % 3] : 0;
+                int c = n - 2 >= 0 ? dp[i][(n - 2) % 3] : 0;
+                dp[i][n % 3] = max(values[i] + min(a, b),
                                   values[i + n - 1] + min(b, c));
             }
         }
-        return P[0][values.size() % 3] > sum - P[0][values.size() % 3];
+        return dp[0][values.size() % 3] > sum - dp[0][values.size() % 3];
     }
 
     // Time: O(n), Space: O(1)
