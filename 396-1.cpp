@@ -43,7 +43,7 @@ public:
         for (int i = 2; i < n; i++) {
             for (int j = 0; i + j < n; j++) {
                 int a = sum[i + j + 1] - sum[j];
-                dp[j] = a - min(dp[j + 1], dp[j]);
+                dp[j] = a - min(dp[j], dp[j + 1]);
             }
         }
         return (dp[0] * 2 > sum[n]);
