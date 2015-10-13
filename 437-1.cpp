@@ -10,7 +10,7 @@ Challenge
 Could you do this in O(n*k) time ?
 */
 
-// Time:  O(nk^2)
+// Time:  O(n^2*k)
 // Space: O(nk)
 
 class Solution {
