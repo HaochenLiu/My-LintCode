@@ -22,6 +22,9 @@ public:
      */
     int copyBooks(vector<int> &pages, int k) {
         int n = pages.size();
+        if(k == 0) return 0;
+        if(n == 0) return 0;
+        if(n == 1) return pages[0];
         k = min(n, k);
         vector<int> sum_from_start(n, 0);
         partial_sum(pages.begin(), pages.end(), sum_from_start.begin());
@@ -30,7 +33,7 @@ public:
             minutes[1][j] = sum_from_start[j];
         }
         for (int i = 2; i <= k; i++) {
-            minutes[i][0] = sum_from_start[1];
+            minutes[i][0] = sum_from_start[0];
             int left = 0, right = 1;
             while (right < n) {
                 int curr = sum_from_start[right] - sum_from_start[left];
