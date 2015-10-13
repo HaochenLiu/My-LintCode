@@ -24,11 +24,7 @@ All words contain only lowercase alphabetic characters.
 
 class Solution {
 private:
-    unordered_map<string,vector<string> > m;
-    vector<vector<string> > res;
-    vector<string> path;
-    
-    void findDict2(string str, unordered_set<string> &dict, unordered_set<string> &next_lev) {
+    void findDict2(unordered_map<string,vector<string>>& m, string str, unordered_set<string> &dict, unordered_set<string> &next_lev) {
         int sz = str.size();
         string s = str;
         for(int i = 0; i < sz; i++) {
@@ -43,7 +39,7 @@ private:
         }
     }
     
-    void output(string &start, string last){
+    void output(unordered_map<string,vector<string>>& m, vector<vector<string>>& res, vector<string>& path, string &start, string last){
         if(last == start){
             reverse(path.begin(), path.end());
             res.push_back(path);
@@ -51,7 +47,7 @@ private:
         } else {
             for(int i = 0; i < m[last].size(); i++){
                 path.push_back(m[last][i]);
-                output(start,m[last][i]);
+                output(m, res, path, start, m[last][i]);
                 path.pop_back();
             }
         }
@@ -66,10 +62,10 @@ public:
       */
     vector<vector<string>> findLadders(string beginWord, string endWord, unordered_set<string> &wordList) {
         // write your code here
-        m.clear();
-        res.clear();
-        path.clear();
-        
+        unordered_map<string,vector<string>> m;
+        vector<vector<string>> res;
+        vector<string> path;
+
         wordList.insert(beginWord);
         wordList.insert(endWord);
         
@@ -84,7 +80,7 @@ public:
             }
 
             for(auto it = cur_lev.begin(); it != cur_lev.end(); it++) {
-                findDict2(*it, wordList, next_lev);
+                findDict2(m, *it, wordList, next_lev);
             }
 
             if(next_lev.empty()) {
@@ -92,7 +88,7 @@ public:
             }
             
             if(next_lev.find(endWord) != wordList.end()) {
-                output(beginWord, endWord);
+                output(m, res, path, beginWord, endWord);
                 return res;
             }
 
