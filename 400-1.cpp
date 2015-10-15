@@ -23,12 +23,12 @@ public:
      */
     int maximumGap(vector<int> nums) {
         sort(nums.begin(), nums.end());
-        int ans = 0;
+        int res = 0;
         int n = nums.size();
         int i;
         for (i = 1; i < n; ++i) {
-            ans = max(ans, nums[i] - nums[i - 1]);
+            res = max(res, nums[i] - nums[i - 1]);
         }
-        return ans;
+        return res;
     }
 };
