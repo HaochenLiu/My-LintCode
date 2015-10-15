@@ -11,7 +11,7 @@ You may assume all elements in the array are non-negative integers and fit in th
 Challenge Sort is easy but will cost O(nlogn) time. Try to solve it in linear time and space
 */
 
-// O(n) solution, yet tricky and slow...
+// O(n) solution
 #include <climits>
 #include <unordered_set>
 using namespace std;
@@ -23,55 +23,37 @@ public:
      * @return: the maximum difference
      */
     int maximumGap(vector<int> nums) {
-        vector<int> a;
-        unordered_set<int> us;
         int n = nums.size();
-        int i;
-        for (i = 0; i < n; ++i) {
-            us.insert(nums[i]);
+        if (n < 2) return 0;
+        int maxVal = nums[0];
+        int minVal = nums[0];
+        for (int i = 0; i < n; i++) {
+            maxVal = max(maxVal, nums[i]);
+            minVal = min(minVal, nums[i]);
         }
-        for (auto it = us.begin(); it != us.end(); ++it) {
-            a.push_back(*it);
-        }
-        
-        n = a.size();
-        if (n < 2) {
-            return 0;
-        }
-        int minVal = INT_MAX;
-        for (i = 0; i < n; ++i) {
-            minVal = min(minVal, a[i]);
-        }
-        int maxVal = INT_MIN;
-        for (i = 0; i < n; ++i) {
-            a[i] -= minVal;
-            maxVal = max(maxVal, a[i]);
-        }
-        int d = maxVal / (n - 1);
-        vector<vector<int> > b(n);
-        for (i = 0; i < n; ++i) {
-            if (b[a[i] / d].empty()) {
-                b[a[i] / d].push_back(a[i]);
-                b[a[i] / d].push_back(a[i]);
+
+        int len = (maxVal - minVal - 1) / (n - 1) + 1;
+        int cnt = (maxVal - minVal) / len + 1;
+        vector<vector<int>> buckets(cnt, vector<int>{});
+        for (int i = 0; i < n; i++) {
+            int idx = (nums[i] - minVal) / len;
+            if (buckets[idx].empty()) {
+                buckets[idx].resize(2, nums[i]);
             } else {
-                b[a[i] / d][0] = min(b[a[i] / d][0], a[i]);
-                b[a[i] / d][1] = max(b[a[i] / d][1], a[i]);
+                buckets[idx][0] = min(buckets[idx][0], nums[i]);
+                buckets[idx][1] = max(buckets[idx][1], nums[i]);
             }
         }
-        i = 0;
-        int j;
-        int ans = 0;
-        while (i < n) {
-            j = i + 1;
-            while (j < n && b[j].empty()) {
-                ++j;
+
+        int gap = 0;
+        int prev = 0;
+        for (int i = 1; i < cnt; i++) {
+            if (buckets[i].empty()) {
+                continue;
             }
-            if (j == n) {
-                break;
-            }
-            ans = max(ans, b[j][0] - b[i][1]);
-            i = j;
+            gap = max(gap, buckets[i][0] - buckets[prev][1]);
+            prev = i;
         }
-        return ans;
+        return gap;
     }
 };
