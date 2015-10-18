@@ -32,7 +32,7 @@ If you come up with an algorithm that you thought it is O(n log m) or O(m log n)
 */
 
 /*
-Time:  O(n + m)
+Time:  O(n+m)
 Space: O(1)
 */
 
@@ -99,5 +99,6 @@ public:
         
         res[0] = up;
         res[1] = left;
+        return res;
     }
 };
