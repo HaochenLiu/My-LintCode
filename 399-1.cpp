@@ -28,7 +28,9 @@ public:
         // write your code here
         if (nuts.size() != bolts.size()) return;
         cmpsort(nuts, bolts, 0, nuts.size() - 1, compare);
+        return;
     }
+
 private:
     void cmpsort(vector<string>& n, vector<string>& b, int start, int end, Comparator compare) {
         if (start >= end) return;
@@ -37,23 +39,33 @@ private:
         int left = start;
         int right = end;
         while(true) {
-            while (left < right && compare.cmp(n[left], pivot) < 0) { left++; }
-            while (left < right && compare.cmp(n[right], pivot) > 0) { right--; }
-            if (left < right) {
-                swap(n[left], n[right]);
+            while(left < right && compare.cmp(n[left], pivot) < 0) { 
+                left++;
             }
-            else { break; }
+            while(left < right && compare.cmp(n[right], pivot) > 0) {
+                right--;
+            }
+            if(left < right) {
+                swap(n[left], n[right]);
+            } else { 
+                break; 
+            }
         }
         pivot = n[right];
         left = start;
         right = end;
         while(true) {
-            while (left < right && compare.cmp(pivot, b[left]) > 0) { left++; }
-            while (left < right && compare.cmp(pivot, b[right]) < 0) { right--; }
-            if (left < right) {
-                swap(b[left], b[right]);
+            while(left < right && compare.cmp(pivot, b[left]) > 0) {
+                left++;
             }
-            else { break; }
+            while(left < right && compare.cmp(pivot, b[right]) < 0) {
+                right--;
+            }
+            if(left < right) {
+                swap(b[left], b[right]);
+            } else {
+                break;
+            }
         }
         cmpsort(n, b, start, right - 1, compare);
         cmpsort(n, b, right + 1, end, compare);
