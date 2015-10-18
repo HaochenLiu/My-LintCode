@@ -37,12 +37,6 @@ Space: O(1)
 */
 
 class Solution {
-private:
-    bool isPeak(vector<vector<int>>& A, int x, int y) {
-        return (A[x][y] > A[x - 1][y] && A[x][y] > A[x + 1][y] &&
-                A[x][y] > A[x][y - 1] && A[x][y] > A[x][y + 1]);
-    }
-
 public:
     /**
      * @param A: An integer matrix
@@ -56,7 +50,7 @@ public:
         if(A.size() < 3 || A[0].size() < 3) return res;
         int up = 1;
         int down = n - 2;
-        while(down - up > 1) {
+        while(down > up) {
             int mid = (up + down) / 2;
             int maxVal = A[mid][0];
             int maxIdx = 0;
@@ -66,10 +60,10 @@ public:
                     maxIdx = j;
                 }
             }
-            if(A[mid][maxIdx] > A[mid + 1][maxIdx]) {
-                down = mid;
-            } else if(A[mid][maxIdx] > A[mid - 1][maxIdx]) {
-                up = mid;
+            if(A[mid][maxIdx] < A[mid + 1][maxIdx]) {
+                up = mid + 1;
+            } else if(A[mid][maxIdx] < A[mid - 1][maxIdx]) {
+                down = mid - 1;
             } else {
                 res[0] = mid;
                 res[1] = maxIdx;
@@ -77,16 +71,16 @@ public:
             }
         }
         
-        for(int i = up; i <= down; i++) {
-            for(int j = 1; j < m - 1; j++) {
-                if(isPeak(A, i, j)) {
-                    res[0] = i;
-                    res[1] = j;
-                    return res;
-                }
+        int maxVal = A[up][0];
+        int maxIdx = 0;
+        for(int j = 1; j < m - 1; j++) {
+            if(A[up][j] > maxVal) {
+                maxVal = A[up][j];
+                maxIdx = j;
             }
         }
-
+        res[0] = up;
+        res[1] = maxIdx;
         return res;
     }
 };
