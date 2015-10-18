@@ -37,12 +37,6 @@ Space: O(1)
 */
 
 class Solution {
-private:
-    bool isPeak(vector<vector<int>>& A, int x, int y) {
-        return (A[x][y] > A[x - 1][y] && A[x][y] > A[x + 1][y] &&
-                A[x][y] > A[x][y - 1] && A[x][y] > A[x][y + 1]);
-    }
-
 public:
     /**
      * @param A: An integer matrix
@@ -59,8 +53,8 @@ public:
         int left = 1;
         int right = m - 2;
 
-        while(down - up > 1 || right - left > 1) {
-            if(down - up > 1) {
+        while(down > up || right > left) {
+            if(down > up) {
                 int mid = (up + down) / 2;
                 int maxVal = A[mid][left];
                 int maxIdx = left;
@@ -71,9 +65,9 @@ public:
                     }
                 }
                 if(A[mid][maxIdx] < A[mid + 1][maxIdx]) {
-                    up = mid;
+                    up = mid + 1;
                 } else if(A[mid][maxIdx] < A[mid - 1][maxIdx]) {
-                    down = mid;
+                    down = mid - 1;
                 } else {
                     res[0] = mid;
                     res[1] = maxIdx;
@@ -81,7 +75,7 @@ public:
                 }
             }
 
-            if(right - left > 1) {
+            if(right > left) {
                 int mid = (left + right) / 2;
                 int maxVal = A[up][mid];
                 int maxIdx = up;
@@ -92,9 +86,9 @@ public:
                     }
                 }
                 if(A[maxIdx][mid] < A[maxIdx][mid + 1]) {
-                    left = mid;
+                    left = mid + 1;
                 } else if(A[maxIdx][mid] < A[maxIdx][mid - 1]) {
-                    right = mid;
+                    right = mid - 1;
                 } else {
                     res[0] = maxIdx;
                     res[1] = mid;
@@ -103,16 +97,7 @@ public:
             }
         }
         
-        for(int i = up; i <= down; i++) {
-            for(int j = left; j <= right; j++) {
-                if(isPeak(A, i, j)) {
-                    res[0] = i;
-                    res[1] = j;
-                    return res;
-                }
-            }
-        }
-
-        return res;
+        res[0] = up;
+        res[1] = left;
     }
 };
