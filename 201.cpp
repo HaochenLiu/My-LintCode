@@ -47,24 +47,24 @@ See wiki: Segment Tree Interval Tree
  *     }
  * }
  */
-typedef SegmentTreeNode STN;
 class Solution {
 public:
     /**
      *@param start, end: Denote an segment / interval
      *@return: The root of Segment Tree
      */
-    STN *build(int start, int end) {
-        if (start > end) {
-            return NULL;
+    SegmentTreeNode* build(int start, int end) {
+        // write your code here
+        if(start > end) return NULL;
+        if(start == end) {
+            SegmentTreeNode* node = new SegmentTreeNode(start, end);
+            node->left == NULL;
+            node->right == NULL;
+            return node;
         }
-        STN *root = new STN(start, end);
-        if (start == end) {
-            return root;
-        }
-        int mid = start + (end - start) / 2;
-        root->left = build(start, mid);
-        root->right = build(mid + 1, end);
-        return root;
+        SegmentTreeNode* node = new SegmentTreeNode(start, end);
+        node->left = build(start, (start + end) / 2);
+        node->right = build((start + end) / 2 + 1, end);
+        return node;
     }
 };
