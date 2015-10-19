@@ -60,7 +60,6 @@ public:
              return vector<int>{-1, -1};
         }
 
-
         return vector<int>{leftRange, rightRange};
     }
 };
