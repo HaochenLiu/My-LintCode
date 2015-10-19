@@ -8,51 +8,55 @@ Give [-3, 1, 3, -3, 4], return [1,4].
 */
 
 class Solution {
-public:
     /**
-     * @param A an integer array
-     * @return  A list of integers includes the index of
-     *          the first number and the index of the last number
+     *@param A : an integer sorted array
+     *@param target :  an integer to be inserted
+     *return : a list of length 2, [index1, index2]
      */
-    vector<int> continuousSubarraySum(vector<int>& A) {
+public:
+    vector<int> searchRange(vector<int> &A, int target) {
+        // write your code here
         int n = A.size();
-        int ll;
-        int sum;
-        int msum;
-        
-        ll = 0;
-        msum = A[0];
-        int i;
-        for (i = 1; i < n; ++i) {
-            if (A[i] > msum) {
-                msum = A[i];
-                ll = i;
+        if(n == 0) return vector<int>{-1, -1};
+        if(A[n - 1] < target || A[0] > target) return vector<int>{-1, -1};
+        int leftRange = -1;
+        int rightRange = -1;
+        int left = 0;
+        int right = n - 1;
+        while(left <= right) {
+            int mid = left + (right - left) / 2;
+            if(A[mid] == target) {
+                leftRange = mid;
+                right = mid - 1;
+            } else if(A[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
             }
-        }
-        vector<int> ans;
-        if (msum <= 0) {
-            ans.push_back(ll);
-            ans.push_back(ll);
-            return ans;
         }
         
-        int mll, mrr;
-        ll = 0;
-        msum = sum = 0;
-        for (i = 0; i < n; ++i) {
-            sum += A[i];
-            if (sum < 0) {
-                sum = 0;
-                ll = i + 1;
-            }
-            if (sum > msum) {
-                msum = sum;
-                mll = ll;
-                mrr = i;
+        if(leftRange == -1) {
+             return vector<int>{-1, -1};
+        }
+
+        left = 0;
+        right = n - 1;
+        while(left <= right) {
+            int mid = left + (right - left) / 2;
+            if(A[mid] == target) {
+                rightRange = mid;
+                left = mid + 1;
+            } else if(A[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
             }
         }
-        ans.push_back(mll);
-        ans.push_back(mrr);
-        return ans;
+
+        if(rightRange == -1) {
+             return vector<int>{-1, -1};
+        }
+
+        return vector<int>{leftRange, rightRange};
     }
 };
