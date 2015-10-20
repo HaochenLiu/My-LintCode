@@ -21,9 +21,6 @@ Note
 It is much easier to understand this problem if you finished Segment Tree Build first.
 */
 
-#include <algorithm>
-#include <climits>
-using namespace std;
 /**
  * Definition of SegmentTreeNode:
  * class SegmentTreeNode {
@@ -38,25 +35,20 @@ using namespace std;
  *     }
  * }
  */
-typedef SegmentTreeNode STN;
 class Solution {
 public:
     /**
-     *@param root, start, end: The root of segment tree and
+     *@param root, start, end: The root of segment tree and 
      *                         an segment / interval
      *@return: The maximum number in the interval [start, end]
      */
-    int query(STN *root, int start, int end) {
-        if (start > end) {
-            return INT_MIN;
-        }
-        if (start == root->start && end == root->end) {
-            return root->max;
-        }
-        int mid = root->start + (root->end - root->start >> 1);
-        int ans = INT_MIN;
-        ans = max(ans, query(root->left, start, min(end, mid)));
-        ans = max(ans, query(root->right, max(start, mid + 1), end));
-        return ans;
+    int query(SegmentTreeNode* root, int start, int end) {
+        // write your code here
+        if(root == NULL) return 0;
+        if(start > end) return 0;
+        if(start == root->start && end == root->end) return root->max;
+        int t1 = query(root->left, start, min(end, root->left->end));
+        int t2 = query(root->right, max(start, root->right->start), end);
+        return max(t1, t2);
     }
 };
