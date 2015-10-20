@@ -23,26 +23,21 @@ public:
     void push(int number) {
         // write your code here
         s.push(number);
-        if(minInt.empty()) {
+        if(minInt.empty() || number <= minInt.top()) {
             minInt.push(number);
-        } else if(minInt.top() >= number) {
-            minInt.push(number);
-            return;
         }
+
+        return;
     }
     
     int pop() {
         // write your code here
         int res = s.top();
-        if(!s.empty()) {
-            if(minInt.top() == s.top()) {
-                s.pop();
-                minInt.pop();
-            }
-            else {
-                s.pop();
-            }
+        if(minInt.top() == s.top()) {
+            minInt.pop();
         }
+        s.pop();
+
         return res;
     }
 
