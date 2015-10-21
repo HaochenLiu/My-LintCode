@@ -44,9 +44,8 @@ public:
         // write your code here
         if (cacheMap.find(key) != cacheMap.end()) {
             auto it = cacheMap[key];
+            it->value = value;
             cacheList.splice(cacheList.begin(), cacheList , it);
-            cacheMap[key] = cacheList.begin();
-            cacheList.begin()->value = value;
         } else {
             if(cacheList.size() == size) {
                 cacheMap.erase(cacheList.back().key);
