@@ -26,38 +26,44 @@ public:
       * @param dict, a set of string
       * @return an integer
       */
-    int ladderLength(string start, string end, unordered_set<string> &dict) {
+    int ladderLength(string beginWord, string endWord, unordered_set<string> &wordList) {
         // write your code here
-        if (start.size() != end.size()) return 0;
-        if (start.empty() || end.empty()) return 1;
-        if (dict.size() == 0) return 0;
+        if(beginWord.size() != endWord.size()) return 0;
+        if(beginWord == endWord) return 1;
+        unordered_set<string> s;
+        queue<string> cur;
+        queue<string> next;
+        int dist = 2;
 
-        int distance = 1;
-        queue<string> queToPush, queToPop;
-        queToPop.push(start);
-        while (dict.size() > 0 && !queToPop.empty()) {
-            while (!queToPop.empty()) {
-                string str(queToPop.front());
-                queToPop.pop();
-                for (int i = 0; i < str.size(); i++) {
-                    for (char j = 'a'; j <= 'z'; j++) {
-                        if (j == str[i]) {
-                            continue;
+        wordList.insert(beginWord);
+        wordList.insert(endWord);
+        s.insert(beginWord);
+        cur.push(beginWord);
+
+        while(!cur.empty()) {
+            while(!cur.empty()) {
+                string str = cur.front();
+                cur.pop();
+                for(int i = 0; i < str.size(); i++) {
+                    char t = str[i];
+                    for(char c = 'a'; c <= 'z'; c++) {
+                        if(c == t) continue;
+                        str[i] = c;
+                        if(wordList.find(str) != wordList.end() && s.find(str) == s.end()) {
+                            if(str == endWord) {
+                                return dist;
+                            }
+                            next.push(str);
+                            s.insert(str);
                         }
-                        char temp = str[i];
-                        str[i] = j;
-                        if (str == end) return distance + 1;
-                        if (dict.count(str) > 0) {
-                            queToPush.push(str);
-                            dict.erase(str);
-                        }
-                        str[i] = temp;
                     }
+                    str[i] = t;
                 }
             }
-            swap(queToPush, queToPop);
-            distance++;
+            swap(cur, next);
+            dist++;
         }
+
         return 0;
     }
 };
