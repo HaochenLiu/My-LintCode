@@ -11,9 +11,10 @@ Challenge
 O(n x m) memory is acceptable, can you do it in O(m) memory?
 */
 
-// O(n * m) time, O(m) space
-#include <algorithm>
-using namespace std;
+//
+Time: O(n*m)
+Space: O(m)
+*/
 
 class Solution {
 public:
@@ -23,24 +24,21 @@ public:
      * @return: The maximum value
      */
     int backPackII(int m, vector<int> A, vector<int> V) {
-        vector<int> dp;
+        vector<int> dp(m + 1, -1);
         int n = A.size();
-        int i, j;
-        
-        dp.resize(m + 1, -1);
+
         dp[0] = 0;
-        for (i = 0; i < n; ++i) {
-            for (j = m; j >= A[i]; --j) {
-                if (dp[j - A[i]] < 0) {
-                    continue;
-                }
+        for (int i = 0; i < n; i++) {
+            for (int j = m; j >= A[i]; j--) {
+                if (dp[j - A[i]] < 0) continue;
                 dp[j] = max(dp[j], dp[j - A[i]] + V[i]);
             }
         }
-        int ans = 0;
-        for (i = m; i >= 0; --i) {
-            ans = max(ans, dp[i]);
+
+        int res = 0;
+        for (int i = m; i >= 0; i--) {
+            res = max(res, dp[i]);
         }
-        return ans;
+        return res;
     }
 };
