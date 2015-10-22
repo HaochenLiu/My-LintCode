@@ -23,37 +23,38 @@ All words contain only lowercase alphabetic characters.
 */
 
 class Solution {
-private:
-    void findDict2(unordered_map<string,vector<string>>& m, string str, unordered_set<string> &dict, unordered_set<string> &next_lev) {
-        int sz = str.size();
+public:
+    void findDict(unordered_map<string, vector<string>>& m, unordered_set<string> &wordList, unordered_set<string> &next, string str) {
+        int n = str.size();
         string s = str;
-        for(int i = 0; i < sz; i++) {
-            s = str;
-            for(char j = 'a'; j <= 'z'; j++) {
-                s[i] = j;
-                if(dict.find(s) != dict.end()) {
-                    next_lev.insert(s);
+        for(int i = 0; i < n; i++) {
+            char t = s[i];
+            for(char c = 'a'; c <= 'z'; c++) {
+                if(t == c) continue;
+                s[i] = c;
+                if(wordList.find(s) != wordList.end()) {
+                    next.insert(s);
                     m[s].push_back(str);
                 }
             }
+            s[i] = t;
         }
     }
     
-    void output(unordered_map<string,vector<string>>& m, vector<vector<string>>& res, vector<string>& path, string &start, string last){
-        if(last == start){
+    void output(unordered_map<string, vector<string>>& m, vector<vector<string>>& res, vector<string>& path, string& beg, string& end) {
+        if(beg == end) {
             reverse(path.begin(), path.end());
             res.push_back(path);
             reverse(path.begin(), path.end());
         } else {
-            for(int i = 0; i < m[last].size(); i++){
-                path.push_back(m[last][i]);
-                output(m, res, path, start, m[last][i]);
+            for(int i = 0; i < m[end].size(); i++) {
+                path.push_back(m[end][i]);
+                output(m, res, path, beg, m[end][i]);
                 path.pop_back();
             }
         }
     }
     
-public:
     /**
       * @param start, a string
       * @param end, a string
@@ -62,40 +63,39 @@ public:
       */
     vector<vector<string>> findLadders(string beginWord, string endWord, unordered_set<string> &wordList) {
         // write your code here
-        unordered_map<string,vector<string>> m;
         vector<vector<string>> res;
         vector<string> path;
-
+        unordered_set<string> cur;
+        unordered_set<string> next;
+        unordered_map<string, vector<string>> m;
+        
         wordList.insert(beginWord);
         wordList.insert(endWord);
-        
-        unordered_set<string> cur_lev;
-        cur_lev.insert(beginWord);
-        unordered_set<string> next_lev;
+        cur.insert(beginWord);
         path.push_back(endWord);
         
         while(true) {
-            for(auto it = cur_lev.begin(); it != cur_lev.end(); it++) {
+            for(auto it = cur.begin(); it != cur.end(); it++) {
                 wordList.erase(*it);
             }
 
-            for(auto it = cur_lev.begin(); it != cur_lev.end(); it++) {
-                findDict2(m, *it, wordList, next_lev);
+            for(auto it = cur.begin(); it != cur.end(); it++) {
+                findDict(m, wordList, next, *it);
             }
 
-            if(next_lev.empty()) {
+            if(next.empty()) {
                 return res;
             }
             
-            if(next_lev.find(endWord) != wordList.end()) {
+            if(next.find(endWord) != next.end()) {
                 output(m, res, path, beginWord, endWord);
                 return res;
             }
 
-            cur_lev.clear();
-            cur_lev = next_lev;
-            next_lev.clear();
+            cur = next;
+            next.clear();
         }
+
         return res;    
     }
 };
