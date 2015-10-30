@@ -20,6 +20,7 @@ O(n) time and memory.
 */
 
 // Cartesian Tree, make it O(n)
+
 /**
  * Definition of TreeNode:
  * class TreeNode {
@@ -39,19 +40,18 @@ public:
      * @return: The root of max tree.
      */
     TreeNode* maxTree(vector<int> A) {
+        if(A.empty()) return NULL;
         int n = A.size();
-        if (n == 0) {
-            return NULL;
-        }
-        stack<TreeNode *> st;
-        TreeNode *p, *p1, *p2;
-        int i;
-        for (i = 0; i < n; ++i) {
+        stack<TreeNode*> st;
+        TreeNode* p;
+        TreeNode* p1;
+        TreeNode* p2;
+        for(int i = 0; i < n; ++i) {
             p = new TreeNode(A[i]);
-            if (!st.empty() && A[i] > st.top()->val) {
+            if(!st.empty() && A[i] > st.top()->val) {
                 p1 = st.top();
                 st.pop();
-                while (!st.empty() && A[i] > st.top()->val) {
+                while(!st.empty() && A[i] > st.top()->val) {
                     p2 = st.top();
                     st.pop();
                     p2->right = p1;
@@ -62,9 +62,9 @@ public:
             st.push(p);
         }
         
-        TreeNode *r = st.top();
+        TreeNode* r = st.top();
         st.pop();
-        while (!st.empty()) {
+        while(!st.empty()) {
             st.top()->right = r;
             r = st.top();
             st.pop();
