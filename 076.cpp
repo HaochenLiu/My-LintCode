@@ -40,7 +40,7 @@ public:
                 v.push_back(nums[i]);
                 continue;
             }
-            j = lower_bound(v.begin(), v.end(), nums[i]) - v.begin();
+            j = upper_bound(v.begin(), v.end(), nums[i]) - v.begin();
             v[j] = nums[i];
         }
         return v.size();
