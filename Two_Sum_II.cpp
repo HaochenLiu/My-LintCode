@@ -1,5 +1,5 @@
 /*
-Two_Sum_II
+Two Sum II
 
 Given an array of integers, find how many pairs in the array such that their sum is bigger than a specific target number. Please return the number of pairs.
 
