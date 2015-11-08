@@ -32,7 +32,7 @@ public:
 
         // DP of sum.
         // Time:  O(k * n^2)
-        // Space: O(nk)
+        // Space: O(n)
         // sum[i][j] denotes the smallest sum of
         // picking i + 1 post offices for the first j + 1 houses.
         vector<vector<int>> sum(2, vector<int>(n, INT_MAX));
