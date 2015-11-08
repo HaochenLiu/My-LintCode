@@ -43,8 +43,8 @@ public:
 
         for(int i = 1; i < k; i++) {
             for(int j = 1; j < n; j++) {
-                for(int r = 1; r <= j; r++) {
-                    sum[i % 2][j] = min(sum[i % 2][j], sum[(i - 1) % 2][j - r] + cost[j - r + 1][j]);
+                for(int r = 0; r < j; r++) {
+                    sum[i % 2][j] = min(sum[i % 2][j], sum[(i - 1) % 2][r] + cost[r + 1][j]);
                 }
             }
         }
