@@ -22,7 +22,7 @@ public:
      */
     int copyBooksII(int n, vector<int> &times) {
         // write your code here
-        if(times.empty() || n < 2) return 0;
+        if(times.empty() || n < 1) return 0;
         sort(times.begin(), times.end());
         int k = times.size();
         k = min(k, n);
