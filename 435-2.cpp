@@ -21,49 +21,48 @@ public:
      */
     int postOffice(vector<int>& A, int k) {
         const int n = A.size();
-        if (A.empty() || k >= n) return 0;
+        if (A.empty() || k >= n || k <= 0) return 0;
         sort(A.begin(), A.end());
 
         // Precompute cost.
         // Time:  O(n^3)
         // Space: O(n^2)
-        vector<vector<int>> cost(n + 1, vector<int>(n + 1, 0));
+        vector<vector<int>> cost(n, vector<int>(n, 0));
         computeMinCost(A, cost);
 
         // DP of sum.
         // Time:  O(k * n^2)
-        // Space: O(n)
+        // Space: O(nk)
         // sum[i][j] denotes the smallest sum of
-        // picking i post offices for the first j houses.
-        vector<vector<int>> sum(2, vector<int>(n + 1, INT_MAX));
-        sum[0][0] = 0;
-        for(int i = 1; i <= k; i++) {
-            for(int j = 0; j <= n; j++) {
-                // sum[i % 2][j] = INT_MAX;
+        // picking i + 1 post offices for the first j + 1 houses.
+        vector<vector<int>> sum(2, vector<int>(n, INT_MAX));
+        for(int j = 0; j < n; j++) {
+            sum[0][j] = cost[0][j];
+        }
+        sum[1][0] = 0;
+
+        for(int i = 1; i < k; i++) {
+            for(int j = 1; j < n; j++) {
                 for(int r = 1; r <= j; r++) {
-                    if(sum[(i - 1) % 2][j - r] != INT_MAX) {
-                        sum[i % 2][j] = min(sum[i % 2][j],
-                                            sum[(i - 1) % 2][j - r] +
-                                            cost[j - r + 1][j]);
-                    }
+                    sum[i % 2][j] = min(sum[i % 2][j], sum[(i - 1) % 2][j - r] + cost[j - r + 1][j]);
                 }
             }
         }
-        return sum[k % 2][n];
+        return sum[(k - 1) % 2][n - 1];
     }
 
     void computeMinCost(const vector<int>& A, vector<vector<int>>& cost) {
         // Min cost of building a post office between house (i, j).
         // This post office must be in median position.
         const int n = A.size();
-        for(int i = 0; i < n; ++i) {
-            for(int j = i; j < n; ++j) {
+        for(int i = 0; i < n; i++) {
+            for(int j = i + 1; j < n; j++) {
                 int mid = (i + j) / 2;
-                for(int l = i; l <= mid; l++) {
-                    cost[i + 1][j + 1] += A[mid] - A[l];
+                for(int l = i; l < mid; l++) {
+                    cost[i][j] += A[mid] - A[l];
                 }
                 for(int r = mid + 1; r <= j; r++) {
-                    cost[i + 1][j + 1] += A[r] - A[mid];
+                    cost[i][j] += A[r] - A[mid];
                 }
             }
         }
