@@ -26,14 +26,13 @@ public:
      */
     vector<int> countOfSmallerNumber(vector<int> &A, vector<int> &queries) {
         int n = queries.size();
-        int i, j;
-        vector<int> ans;
-        
+        vector<int> res;
         sort(A.begin(), A.end());
-        for (i = 0; i < n; ++i) {
-            j = lower_bound(A.begin(), A.end(), queries[i]) - A.begin();
-            ans.push_back(j);
+        for (int i = 0; i < n; ++i) {
+            int t = lower_bound(A.begin(), A.end(), queries[i]) - A.begin();
+            res.push_back(t);
         }
-        return ans;
+
+        return res;
     }
 };
