@@ -96,6 +96,33 @@ public:
                     }
                     delete(cur);
                     return root;
+                } else {
+                    if(cur->left->right == NULL) {
+                        cur->left->right = cur->right;
+                        if(parent->left == cur) {
+                            parent->left = cur->left;
+                        } else {
+                            parent->right = cur->left;
+                        }
+                        delete(cur);
+                        return root;
+                    } else {
+                        TreeNode* node = cur->left;
+                        while(node->right->right) {
+                            node = node->right;
+                        }
+                        TreeNode* node2 = node->right;
+                        node->right = NULL;
+                        node2->right = cur->right;
+                        node2->left = cur->left;
+                        if(parent->left == cur) {
+                            parent->left = node2;
+                        } else {
+                            parent->right = node2;
+                        }
+                        delete(cur);
+                        return root;
+                    }
                 }
             } else if(cur->val < value) {
                 parent = cur;
