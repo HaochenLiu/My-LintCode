@@ -1,5 +1,5 @@
 /*
-Generate Parentheses
+427. Generate Parentheses
 
 Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
 Have you met this question in a real interview?
