@@ -1,5 +1,5 @@
 /*
-Happy Number
+488. Happy Number
 
 Write an algorithm to determine if a number is happy.
 
