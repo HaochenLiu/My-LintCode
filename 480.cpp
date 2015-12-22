@@ -1,5 +1,5 @@
 /*
-Binary Tree Paths
+480. Binary Tree Paths
 
 Given a binary tree, return all root-to-leaf paths.
 Have you met this question in a real interview?
