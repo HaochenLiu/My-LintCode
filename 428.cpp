@@ -1,5 +1,5 @@
 /*
-Pow(x, n)
+428. Pow(x, n)
 
 Implement pow(x, n).
 Have you met this question in a real interview?
