@@ -1,5 +1,5 @@
 /*
-517. Ugly Number Show result 
+517. Ugly Number
 
 Write a program to check whether a given number is an ugly number`.
 
