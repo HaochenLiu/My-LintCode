@@ -66,7 +66,6 @@ private:
     stack<NestedInteger> myStack;
     vector<NestedInteger>::iterator it;
     vector<NestedInteger>::iterator end;
-
 };
 
 /**
