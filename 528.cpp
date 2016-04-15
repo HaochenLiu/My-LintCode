@@ -46,7 +46,6 @@ public:
     }
 
     bool hasNext() {
-
         while (myStack.empty() && it != end || !myStack.empty() && !myStack.top().isInteger()){
             if (myStack.empty()){
                 myStack.push((*it));
